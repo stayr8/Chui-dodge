@@ -7,6 +7,9 @@ public class PlayerController : MonoBehaviour
     private Rigidbody playerRigidbody; // 이동에 사용할 리지드바디 컴포넌트
     public float speed; // 이동 속력
 
+    public int hp = 100;
+    public HpBar hpbar;
+
     void Start()
     {
         playerRigidbody = GetComponent<Rigidbody>();
@@ -26,6 +29,26 @@ public class PlayerController : MonoBehaviour
         Vector3 newVelocity = new Vector3(xSpeed, 0f, zSpeed);
         // 리지드바디의 속도에 newVelocity 할당
         playerRigidbody.velocity = newVelocity;
+    }
+
+    public void GetDamage(int damage)
+    {
+        hp -= damage;
+        hpbar.SetHP(hp);
+        if(hp <= 0)
+        {
+            Die();
+        }
+    }
+
+    public void GetHeal(int heal)
+    {
+        hp += heal;
+        if(hp > 100)
+        {
+            hp = 100;
+        }
+        hpbar.SetHP(hp);
     }
 
     public void Die()
